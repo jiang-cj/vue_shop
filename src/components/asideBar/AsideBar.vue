@@ -1,8 +1,12 @@
 <template>
 <div class="aside-bar">
   <el-menu :collapse="isCollapse"  :collapse-transition="false"  :unique-opened="true"
-           :router="true" :default-active="activePath" style="width: 200px"
-           background-color="#333744" text-color="white" active-text-color="#409FFF">
+           :router="true" :default-active="activePath" style="width: 100%"
+           background-color="#001529" text-color="white" active-text-color="#409FFF">
+    <el-menu-item index="/welcome" @click="savePath('/welcome')" class="shouye">
+      <i class="el-icon-data-line"></i>
+      <span>管理首页</span>
+    </el-menu-item>
     <el-submenu :index="item.id+''" v-for="(item,index) in menus"  :key="index">
       <template slot="title">
         <i :class="itemC[index]"></i>
@@ -21,6 +25,8 @@
 </template>
 
 <script>
+import {setItem,getItem} from "../../utils/storage";
+
 export default {
   name: "AsideBar",
   props:{
@@ -41,11 +47,11 @@ export default {
   methods:{
     // 保存连接的激活地址
     savePath(activePath){
-      window.sessionStorage.setItem("activePath",activePath)
+      setItem("activePath",activePath)
     }
   },
   created() {
-    this.activePath = window.sessionStorage.getItem('activePath')
+    this.activePath = getItem('activePath')
   }
 }
 </script>
@@ -54,5 +60,13 @@ export default {
 .aside-bar{
   padding: 0;
   margin:0 ;
+}
+.shouye{
+  font-size: 14px;
+  color: #303133;
+  padding: 0 20px;
+  cursor: pointer;
+  transition: border-color .3s,background-color .3s,color .3s;
+  box-sizing: border-box;
 }
 </style>
